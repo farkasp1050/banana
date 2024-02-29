@@ -1,0 +1,1 @@
+Ez az Adatbázis alapú rendszerek gyakorlat 1. mérföldkövének mappája. A diagramok külön-külön megtaláhatóak, összevonva pedig a dokumentációban láthatóak, a további szükséges magyarázatokkal együtt.
