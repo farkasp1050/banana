@@ -1,0 +1,93 @@
+#hatter_hallgato {
+    background-color: cornflowerblue;
+}
+
+#hatter_oktato {
+    background-color: lightseagreen;
+}
+
+#hatter {
+    background-color: blanchedalmond;
+}
+
+#bejelentkezes{
+    background-color: white;
+    text-align: center;
+    padding: 0%;
+    border: 3px solid darkblue;
+    border-radius: 5px;
+    margin: 30px auto;
+    margin-bottom: 100px;
+    box-sizing: border-box;
+    width: 450px;
+    height: 650px;
+}
+
+#k_megh{
+    background-color: white;
+    text-align: center;
+    padding: 0%;
+    border: 3px solid darkblue;
+    border-radius: 5px;
+    margin: 30px auto;
+    margin-bottom: 100px;
+    box-sizing: border-box;
+    width: 450px;
+    height: 570px;
+}
+
+#vizsga_box {
+    background-color: white;
+    text-align: center;
+    padding: 0%;
+    border: 3px solid darkblue;
+    border-radius: 5px;
+    margin: 40px auto;
+    margin-bottom: 100px;
+    box-sizing: border-box;
+    width: 450px;
+    height: 500px;
+}
+
+#vizsga_box_kicsi {
+    background-color: white;
+    text-align: center;
+    padding: 0%;
+    border: 3px solid darkblue;
+    border-radius: 5px;
+    margin: 40px auto;
+    margin-bottom: 100px;
+    box-sizing: border-box;
+    width: 450px;
+    height: 380px;
+}
+
+.cim {
+    font-size: 220%;
+    text-align: center;
+    font-family: 'Times New Roman', Times, serif;
+    margin-left: 3.5%;
+    margin-right: 3.5%;
+    font-weight: bold;
+    color: white;
+}
+
+#alaphelyzet{
+    width: 40%;
+    height: 2rem;
+    color: white;
+    border: 0;
+    border-radius:15px;
+    background-color: dimgrey;
+    margin: 10px auto;
+}
+
+#regisztracio {
+    margin-left: 20px;
+    width: 40%;
+    height: 30px;
+    color: white;
+    border: 0;
+    border-radius: 15px;
+    background-color: rgba(49, 232, 98);
+}

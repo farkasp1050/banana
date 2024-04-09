@@ -1,0 +1,50 @@
+#hatter_hallgato {
+    background-color: cornflowerblue;
+}
+
+#hatter_oktato {
+    background-color: lightseagreen;
+}
+
+#kijelentkezes{
+    background-color: white;
+    text-align: center;
+    padding: 5%;
+    border: 3px solid darkblue;
+    border-radius: 5px;
+    margin: 150px auto;
+    margin-bottom: 100px;
+    box-sizing: border-box;
+    width: 500px;
+    height: 300px;
+}
+
+.cim {
+    font-size: 220%;
+    text-align: center;
+    font-family: 'Times New Roman', Times, serif;
+    margin-left: 3.5%;
+    margin-right: 3.5%;
+    font-weight: bold;
+    color: black;
+}
+
+#vissza_gomb{
+    width: 30%;
+    height: 2rem;
+    color: white;
+    border: 0;
+    border-radius:15px;
+    background-color: dimgrey;
+    margin: 10px auto;
+}
+
+#kijelentkezes_gomb {
+    margin-left: 20px;
+    width: 200px;
+    height: 30px;
+    color: white;
+    border: 0;
+    border-radius: 15px;
+    background-color: rgba(49, 232, 98);
+}
