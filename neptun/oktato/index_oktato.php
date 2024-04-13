@@ -19,7 +19,7 @@ session_start();
         <nav>
             <ul>
                 <li>
-                    <a aria-current="page" href="index_oktato.php">Adatok</a>
+                    <a aria-current="page" href="index_oktato.php">Főoldal</a>
                 </li>
                 <li>
                     <a href="kurzusok_kezelese.php">Kurzusok kezelése</a>

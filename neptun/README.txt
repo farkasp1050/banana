@@ -1,3 +1,8 @@
+Admin belépés:
+Felhasználónév: admin
+Jelszó: admin
+
+
 Az oktató belépési adatai:
 FELHASZNÁLÓNÉV: "oktato",
 JELSZÓ: pl.: "Jelszo123" (KELL: kisbetű, nagybetű és számjegy).

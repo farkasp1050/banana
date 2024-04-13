@@ -6,6 +6,10 @@
     background-color: lightseagreen;
 }
 
+#hatter_admin {
+    background-color: darkred;
+}
+
 #hatter {
     background-color: blanchedalmond;
 }
@@ -21,6 +25,33 @@
     box-sizing: border-box;
     width: 450px;
     height: 650px;
+}
+
+
+#allam{
+    background-color: white;
+    text-align: center;
+    padding: 0%;
+    border: 3px solid darkblue;
+    border-radius: 5px;
+    margin: 130px auto;
+    margin-bottom: 100px;
+    box-sizing: border-box;
+    width: 450px;
+    height: 320px;
+}
+
+#terem{
+    background-color: white;
+    text-align: center;
+    padding: 0%;
+    border: 3px solid darkblue;
+    border-radius: 5px;
+    margin: 130px auto;
+    margin-bottom: 100px;
+    box-sizing: border-box;
+    width: 450px;
+    height: 500px;
 }
 
 #k_megh{

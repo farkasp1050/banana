@@ -14,7 +14,7 @@
         <nav>
             <ul>
                 <li>
-                    <a aria-current="page" href="index_hallgato.php">Adatok</a>
+                    <a aria-current="page" href="index_hallgato.php">Főoldal</a>
                 </li>
                 <li>
                     <a href="kurzusra_jelentkezes.php">Kurzusra jelentkezés</a>

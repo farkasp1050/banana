@@ -23,11 +23,11 @@ if (isset($_POST["v_mgh"])) {
         <div id="vizsga_box">
             <h1>Vizsga meghirdetés</h1>
                 <form method="POST" action="v_mgh_connect.php" accept-charset="utf-8">
-                <p>A vizsga azonosító "V"-vel kezdődjön, utána csak számok szerepeljenek! Figyelem, az azonosító egyedi, később nem módosítható!</p>
-                <input type="text" size="40" name="azonosito" placeholder="Vizsga azonosító..." required/> <br/><br/>
+                <p>Az szonosító egy tetszőleges szám legyen!</p>
+                <input type="text" size="40" name="azonosito" placeholder="Vizsga azonosító..." required/> <br/>
                 <p>A férőhelyet egyetlen számként adja meg!</p>
                 <input type="text" size="40" name="ferohely" placeholder="Férőhely..." required/> <br/>
-                <p>"Írásbeli" vagy "Szóbeli" vagy egyéb.</p>
+                <p>szóbeli | írásbeli</p>
                 <input type="text" size="40" name="jelleg" placeholder="Jelleg..." required/> <br/>
                 <p>Adja meg a vizsga időpontját!</p>
                 <input type="datetime-local" size="40" name="idopont" required/> <br/><br/>
