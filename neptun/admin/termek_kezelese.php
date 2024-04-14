@@ -18,13 +18,13 @@ include '../authentication/admin_auth_check.php';
     <nav>
         <ul>
             <li>
-                <a aria-current="page" href="index_admin.php">Főoldal</a>
+                <a href="index_admin.php">Főoldal</a>
             </li>
             <li>
                 <a href="allamok_kezelese.php">Államok kezelése</a>
             </li>
             <li>
-                <a href="termek_kezelese.php">Termek kezelése</a>
+                <a aria-current="page" href="termek_kezelese.php">Termek kezelése</a>
             </li>
             <li>
                 <a href="../authentication/kijelentkezes_admin.php">Kijelentkezés</a>
@@ -34,7 +34,7 @@ include '../authentication/admin_auth_check.php';
     <br>
     <div id="alap">
         <div id="baloszlop">
-            <p id="focimszoveg">Műveleti<br>oldal.</p>
+            <p id="focimszoveg">Termek<br>módosítása.</p>
         </div>
         <div id="focimkep">
             <img src="../img/widescreen-study.jpg" alt="könyvek" height="330">
@@ -49,21 +49,14 @@ include '../authentication/admin_auth_check.php';
     <h1>Az alábbi táblázatban kattintson arra a szegmensre, amelyet megszeretne tekinteni!</h1>
     <table class="lista_tablazat">
         <tr>
-            <td>Új oktató hozzáadása.</td>
-            <td><a href="oktato_hozzaadasa.php">Megtekintés</a></td>
+            <td>Terem hozzáadása.</td>
+            <td><a href="terem_hozzaadasa.php">Megtekintés</a></td>
         </tr>
         <tr>
-            <td>Új hallgató hozzáadása.</td>
-            <td><a href="hallgato_hozzaadasa.php">Megtekintés</a></td>
+            <td>Termek módosítása, törlése.</td>
+            <td><a href="#">Megtekintés</a></td>
         </tr>
-        <tr>
-            <td>Tantermek, előadótermek. - MÉG NEM MÓDOSÍTOTT</td>
-            <td><a href="../listazasok-lekerdezesek/termek.php">Megtekintés</a></td>
-        </tr>
-        <tr>
-            <td>Összes oktató megtekintése - MÉG NEM MÓDOSÍTOTT</td>
-            <td><a href="../listazasok-lekerdezesek/oktatok.php">Megtekintés</a></td>
-        </tr>
+
     </table>
 </main>
 

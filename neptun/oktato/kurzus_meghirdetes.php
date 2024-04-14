@@ -1,7 +1,6 @@
 
 <?php
 include '../authentication/oktato_auth_check.php';
-session_start();
 if (isset($_POST["k_mgh"])) {
     header("Location: index_oktato.php");
     exit();
@@ -33,8 +32,9 @@ if (isset($_POST["k_mgh"])) {
                 <input type="text" size="40" name="ferohely" placeholder="Férőhely..." required/> <br/>
                 <p>előadás | gyakorlat | labor</p>
                 <input type="text" size="40" name="jelleg" placeholder="Jelleg..." required/> <br/><br>
-                <input id=alaphelyzet onclick=history.back(-1) type=button value=Mégsem />
-                <input id="regisztracio" type="submit" value="Kész" name="k_mgh"/>
+                <input id="alaphelyzet" type="reset" value="Alaphelyzet"/>
+                <input id="regisztracio" type="submit" value="Kész" name="k_mgh"/><br>
+                <input id=megsem onclick=history.back(-1) type=button value=Mégsem />
             </form>
         </div>
     </main>

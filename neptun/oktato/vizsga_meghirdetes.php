@@ -1,7 +1,6 @@
 
 <?php
 include '../authentication/oktato_auth_check.php';
-session_start();
 if (isset($_POST["v_mgh"])) {
     header("Location: index_oktato.php");
     exit();
@@ -31,9 +30,10 @@ if (isset($_POST["v_mgh"])) {
                 <p>szóbeli | írásbeli</p>
                 <input type="text" size="40" name="jelleg" placeholder="Jelleg..." required/> <br/>
                 <p>Adja meg a vizsga időpontját!</p>
-                <input type="datetime-local" size="40" name="idopont" required/> <br/><br/>
-                <input id=alaphelyzet onclick=history.back(-1) type=button value=Mégsem />
-                <input id="regisztracio" type="submit" value="Kész" name="v_mgh"/>
+                <input type="datetime-local" size="40" name="idopont" required/><br/><br/>
+                <input id="alaphelyzet" type="reset" value="Alaphelyzet"/>
+                <input id="regisztracio" type="submit" value="Kész" name="v_mgh"/><br>
+                <input id=megsem onclick=history.back(-1) type=button value=Mégsem />
             </form>
         </div>
     </main>

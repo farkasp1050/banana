@@ -46,7 +46,7 @@ include '../authentication/hallgato_auth_check.php';
 <!-- Top main end ------------------------------------------------------------------------------->
 
     <main>
-        <p>kurzusok felvétele</p>
+        <h1>Coming soon</h1>
     </main>
 </body>
 </html>

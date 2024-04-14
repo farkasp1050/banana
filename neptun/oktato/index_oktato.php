@@ -34,7 +34,7 @@ include '../authentication/oktato_auth_check.php';
         <br>
         <div id="alap">
             <div id="baloszlop">
-                <p id="focimszoveg">Linkek a<br>listákhoz.</p>
+                <p id="focimszoveg">Műveleti<br>oldal.</p>
             </div>
             <div id="focimkep"> 
                 <img src="../img/widescreen-study.jpg" alt="könyvek" height="330">
@@ -45,15 +45,9 @@ include '../authentication/oktato_auth_check.php';
 
 <!-- Top main end ------------------------------------------------------------------------------->
 
-<main>
-    <h1>Az alábbi táblázatban kattintson arra a szegmensre, amelyet megszeretne tekinteni!</h1>
-    <table class="lista_tablazat">
-        <tr>
-            <td>Valami.</td>
-            <td><a href="#">Megtekintés</a></td>
-        </tr>
-    </table>
-</main>
+    <main>
+        <h1>Coming soon</h1>
+    </main>
 
 </body>
 </html>

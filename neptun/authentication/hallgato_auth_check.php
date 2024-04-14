@@ -9,5 +9,4 @@ if (!isset($_SESSION['user_email'])) {
 } else if ($_SESSION['user_type'] !== 'hallgato') {
     header("Location: ../msg_screens/jogosultsag_megtagadva.php");
 }
-exit; // Fontos, hogy a kód futása itt véget érjen
 ?>
