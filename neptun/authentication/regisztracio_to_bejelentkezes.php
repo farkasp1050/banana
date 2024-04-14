@@ -1,3 +1,6 @@
+<?php
+include '../authentication/general_auth_check.php';
+?>
 <!DOCTYPE html>
 <html lang="hu">
 <head>
@@ -17,8 +20,8 @@
         <div id="bejelentkezes">
             <h1>Bejelentkezés</h1>
             <form method="POST" action="login.php" accept-charset="utf-8">
-            <input type="text" size="40" name="username" placeholder="Felhasználónév..." required/> <br/><br/>
-            <input type="password" size="40" name="passwd" placeholder="Jelszó..." required/> <br/><br/>
+            <input type="text" size="40" name="email" placeholder="Felhasználónév..." required/> <br/><br/>
+            <input type="password" size="40" name="jelszo" placeholder="Jelszó..." required/> <br/><br/>
             <input class="bejelentkezes_gomb" type="submit" value="Bejelentkezés" name="bejelentike"/>
             </form>
         </div>

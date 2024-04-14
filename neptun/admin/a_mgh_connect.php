@@ -1,4 +1,7 @@
 <?php
+
+include '../authentication/admin_auth_check.php';
+
 $azonosito = $_POST['nev'];
 $szamlaszam = $_POST['szamlaszam'];
 

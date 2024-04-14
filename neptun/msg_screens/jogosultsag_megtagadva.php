@@ -1,11 +1,5 @@
-
 <?php
 include '../authentication/general_auth_check.php';
-session_start();
-if (isset($_POST["fooldalra"])) {
-    header("Location: ../admin/index_admin.php");
-    exit();
-}
 ?>
 
 <!DOCTYPE html>
@@ -15,15 +9,15 @@ if (isset($_POST["fooldalra"])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel = "stylesheet" href="../style/logout.css">
     <link rel="icon" href="../img/study-icon.png">
-    <title>Sikeres állam hozzáadás</title>
+    <title>Jogosulstág megtagadva!</title>
 </head>
-<body id="hatter_oktato">
+<body id="hatter">
 
     <main>
         <div id="kijelentkezes">
-            <h1>Sikeres hozzáadta az államot!</h1>
+            <h1>Jogosultság megtagadva!</h1>
             <form method="POST">
-                <input id="kijelentkezes_gomb" type="submit" value="OK" name="fooldalra"/>
+                <input id="kijelentkezes_gomb" onclick=history.back(-1) type="submit" value="OK"/>
             </form>
     </main>
 

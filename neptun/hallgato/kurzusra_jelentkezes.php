@@ -1,6 +1,5 @@
-
 <?php
-session_start();
+include '../authentication/hallgato_auth_check.php';
 ?>
 
 <!DOCTYPE html>

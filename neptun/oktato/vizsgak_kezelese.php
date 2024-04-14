@@ -1,6 +1,5 @@
-
 <?php
-session_start();
+include '../authentication/oktato_auth_check.php';
 ?>
 
 <!DOCTYPE html>

@@ -1,5 +1,6 @@
 
 <?php
+include '../authentication/oktato_auth_check.php';
 session_start();
 if (isset($_POST["k_mgh"])) {
     header("Location: index_oktato.php");

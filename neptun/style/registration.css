@@ -14,6 +14,16 @@
     background-color: blanchedalmond;
 }
 
+#megsem{
+    width: 30%;
+    height: 2rem;
+    color: white;
+    border: 0;
+    border-radius:15px;
+    background-color: dimgrey;
+    margin: 10px auto;
+}
+
 #bejelentkezes{
     background-color: white;
     text-align: center;
@@ -27,6 +37,45 @@
     height: 650px;
 }
 
+#registration{
+    background-color: white;
+    text-align: center;
+    padding: 0%;
+    border: 3px solid darkblue;
+    border-radius: 5px;
+    margin: 30px auto;
+    margin-bottom: 100px;
+    box-sizing: border-box;
+    width: 450px;
+    height: 1100px;
+}
+
+#registration_oktato_by_admin{
+    background-color: white;
+    text-align: center;
+    padding: 0%;
+    border: 3px solid darkblue;
+    border-radius: 5px;
+    margin: 30px auto;
+    margin-bottom: 100px;
+    box-sizing: border-box;
+    width: 450px;
+    height: 700px;
+}
+
+#registration_hallgato_by_admin{
+    background-color: white;
+    text-align: center;
+    padding: 0%;
+    border: 3px solid darkblue;
+    border-radius: 5px;
+    margin: 30px auto;
+    margin-bottom: 100px;
+    box-sizing: border-box;
+    width: 450px;
+    height: 850px;
+}
+
 
 #allam{
     background-color: white;
@@ -38,7 +87,7 @@
     margin-bottom: 100px;
     box-sizing: border-box;
     width: 450px;
-    height: 320px;
+    height: 350px;
 }
 
 #terem{
@@ -51,7 +100,7 @@
     margin-bottom: 100px;
     box-sizing: border-box;
     width: 450px;
-    height: 500px;
+    height: 570px;
 }
 
 #k_megh{
@@ -109,7 +158,7 @@
     color: white;
     border: 0;
     border-radius:15px;
-    background-color: dimgrey;
+    background-color: cornflowerblue;
     margin: 10px auto;
 }
 

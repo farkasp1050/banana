@@ -1,5 +1,7 @@
 <?php
 
+include '../authentication/oktato_auth_check.php';
+
     $conn = mysqli_connect("localhost", "root", "", "neptun");
     if (!$conn) {
         die("Sikertelen csatlakozás!");

@@ -1,4 +1,7 @@
 <?php
+
+include '../authentication/oktato_auth_check.php';
+
 $azonostio = $_POST['azonosito'];
 $idopont = date("Y-m-d H:i:s", strtotime($_POST['idopont']));
 $ferohely = $_POST['ferohely'];

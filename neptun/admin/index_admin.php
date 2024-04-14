@@ -1,6 +1,5 @@
-
 <?php
-session_start();
+include '../authentication/admin_auth_check.php';
 ?>
 
 <!DOCTYPE html>
@@ -35,7 +34,7 @@ session_start();
     <br>
     <div id="alap">
         <div id="baloszlop">
-            <p id="focimszoveg">Linkek a<br>listákhoz.</p>
+            <p id="focimszoveg">Műveleti<br>oldal.</p>
         </div>
         <div id="focimkep">
             <img src="../img/widescreen-study.jpg" alt="könyvek" height="330">
@@ -50,11 +49,19 @@ session_start();
     <h1>Az alábbi táblázatban kattintson arra a szegmensre, amelyet megszeretne tekinteni!</h1>
     <table class="lista_tablazat">
         <tr>
-            <td>Tantermek, előadótermek.</td>
+            <td>Új oktató hozzáadása.</td>
+            <td><a href="oktato_hozzaadasa.php">Megtekintés</a></td>
+        </tr>
+        <tr>
+            <td>Új hallgató hozzáadása.</td>
+            <td><a href="hallgato_hozzaadasa.php">Megtekintés</a></td>
+        </tr>
+        <tr>
+            <td>Tantermek, előadótermek. - MÉG NEM MÓDOSÍTOTT</td>
             <td><a href="../listazasok-lekerdezesek/termek.php">Megtekintés</a></td>
         </tr>
         <tr>
-            <td>Összes oktató megtekintése (legfiatalabbtól legidősebbig).</td>
+            <td>Összes oktató megtekintése - MÉG NEM MÓDOSÍTOTT</td>
             <td><a href="../listazasok-lekerdezesek/oktatok.php">Megtekintés</a></td>
         </tr>
     </table>

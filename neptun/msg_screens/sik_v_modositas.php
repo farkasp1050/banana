@@ -1,5 +1,6 @@
 
 <?php
+include '../authentication/general_auth_check.php';
 session_start();
 if (isset($_POST["fooldalra"])) {
     header("Location: ../oktato/vizsgak_modositasa_torlese.php");

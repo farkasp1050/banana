@@ -1,6 +1,5 @@
-
 <?php
-session_start();
+include '../authentication/oktato_auth_check.php';
 ?>
 
 <!DOCTYPE html>
@@ -50,12 +49,8 @@ session_start();
     <h1>Az alábbi táblázatban kattintson arra a szegmensre, amelyet megszeretne tekinteni!</h1>
     <table class="lista_tablazat">
         <tr>
-            <td>Tantermek, előadótermek.</td>
-            <td><a href="../listazasok-lekerdezesek/termek.php">Megtekintés</a></td>
-        </tr>
-        <tr>
-            <td>Összes oktató megtekintése (legfiatalabbtól legidősebbig).</td>
-            <td><a href="../listazasok-lekerdezesek/oktatok.php">Megtekintés</a></td>
+            <td>Valami.</td>
+            <td><a href="#">Megtekintés</a></td>
         </tr>
     </table>
 </main>

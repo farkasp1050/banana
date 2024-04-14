@@ -1,4 +1,7 @@
 <?php
+
+include '../authentication/admin_auth_check.php';
+
 $nev = $_POST['nev'];
 $ferohely = $_POST['ferohely'];
 $jelleg = $_POST['jelleg'];

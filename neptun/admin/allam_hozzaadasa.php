@@ -1,3 +1,7 @@
+<?php
+include '../authentication/admin_auth_check.php';
+?>
+
 <!DOCTYPE html>
 <html lang="hu">
 <head>
@@ -17,8 +21,9 @@
             <input type="text" size="40" name="nev" placeholder="Állam neve..." required/> <br/>
             <p>A számlaszám csak számokból álljon!</p>
             <input type="text" size="40" name="szamlaszam" placeholder="Számlaszám..." required/> <br/><br>
-            <input id=alaphelyzet onclick=history.back(-1) type=button value=Mégsem />
+            <input id="alaphelyzet" type="reset" value="Alaphelyzet"/>
             <input id="regisztracio" type="submit" value="Kész"/>
+            <input id=megsem onclick=history.back(-1) type=button value=Mégsem />
         </form>
     </div>
 </main>

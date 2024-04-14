@@ -1,29 +1,50 @@
 <?php
-    $felhasznalo_nev = $_POST['username'];
-    $jelszo = $_POST['passwd'];
+session_start();
+$email = $_POST['email'];
+$jelszo = $_POST['jelszo'];
 
-    // Database connection
-    $con = new mysqli("localhost", "root", "", "neptun");
-    if ($con->connect_error) {
-        die("Sikertelen csatlakozás: ".$con->connect_error);
+// Oracle adatbázis csatlakozás
+$conn = oci_connect('whitefalcon', 'test123', 'localhost/XE');
+
+if (!$conn) {
+    $e = oci_error();
+    trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
+} else {
+    $sql = "SELECT * FROM FELHASZNALO WHERE email = :email";
+    $stmt = oci_parse($conn, $sql);
+    if (!$stmt) {
+        $e = oci_error($conn);
+        trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
     } else {
-        $stmt = $con->prepare("SELECT * FROM felhasznalo WHERE felhasznalo_nev = ?");
-        $stmt->bind_param("s", $felhasznalo_nev);
-        $stmt->execute();   
-        $stmt_result = $stmt->get_result();
-        if ($stmt_result->num_rows > 0) {
-            $data = $stmt_result->fetch_assoc();
-            if ($data['jelszo'] === $jelszo) {
-                if (str_ends_with($felhasznalo_nev, '_oktato')) {
-                header("Location: ../oktato/index_oktato.php");
-                    } else {
-                    header("Location: ../hallgato/index_hallgato.php");
+        oci_bind_by_name($stmt, ':email', $email);
+        $r = oci_execute($stmt);
+        if (!$r) {
+            $e = oci_error($stmt);
+            trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
+        } else {
+            $row = oci_fetch_assoc($stmt);
+            if ($row) {
+                if ($row['JELSZO'] === $jelszo) {
+                    $_SESSION['user_email'] = $email; // Felhasználó email-jének tárolása session változóban.
+                    if (strpos($email, '@teach.hu') !== false) {
+                        $_SESSION['user_type'] = 'oktato'; // Felhasználó email típusának tárolása session változóban.
+                        header("Location: ../msg_screens/sik_oktatoi_bejelentkezes.php");
+                    } else if (strpos($email, '@stud.hu') !== false) {
+                        $_SESSION['user_type'] = 'hallgato'; // Felhasználó email típusának tárolása session változóban.
+                        header("Location: ../msg_screens/sik_hallgatoi_bejelentkezes.php");
+                    } else if ($email === 'admin') {
+                        $_SESSION['user_type'] = 'admin'; // Felhasználó email típusának tárolása session változóban.
+                        header("Location: ../msg_screens/sik_admini_bejelentkezes.php");
+                    }
+                } else {
+                    header("Location: helytelen_bejelentkezes.php");
                 }
             } else {
                 header("Location: helytelen_bejelentkezes.php");
             }
-        } else {
-            header("Location: helytelen_bejelentkezes.php");
         }
     }
+    oci_free_statement($stmt);
+    oci_close($conn);
+}
 ?>

@@ -1,6 +1,6 @@
 
 <?php
-session_start();
+include '../authentication/hallgato_auth_check.php';
 if (isset($_POST["kijelentike"])) {
     header("Location: kijelentkezes_to_bejelentkezes.php");
     session_unset();

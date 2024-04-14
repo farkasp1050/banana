@@ -1,6 +1,5 @@
-
 <?php
-session_start();
+include '../authentication/admin_auth_check.php';
 ?>
 
 <!DOCTYPE html>
@@ -8,7 +7,7 @@ session_start();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel = "stylesheet" href="../style/index_oktato.css">
+    <link rel = "stylesheet" href="../style/index_admin.css">
     <link rel="icon" href="../img/study-icon.png">
     <title>Termek</title>
 </head>
@@ -19,16 +18,16 @@ session_start();
         <nav>
             <ul>
                 <li>
-                    <a aria-current="page" href="index_oktato.php">Adatok</a>
+                    <a aria-current="page" href="../admin/index_admin.php">Főoldal</a>
                 </li>
                 <li>
-                    <a href="kurzusok_kezelese.php">Kurzusok kezelése</a>
+                    <a href="../admin/allam_hozzaadasa.php">Állam hozzáadása</a>
                 </li>
                 <li>
-                    <a href="vizsgak_kezelese.php">Vizsgák kezelése</a>
+                    <a href="../admin/terem_hozzaadasa.php">Terem hozzáadása</a>
                 </li>
                 <li>
-                    <a href="../authentication/kijelentkezes_oktato.php">Kijelentkezés</a>
+                    <a href="../authentication/kijelentkezes_admin.php">Kijelentkezés</a>
                 </li>
             </ul>
         </nav>

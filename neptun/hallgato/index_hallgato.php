@@ -1,3 +1,7 @@
+<?php
+include '../authentication/hallgato_auth_check.php';
+?>
+
 <!DOCTYPE html>
 <html lang="hu">
 <head>
@@ -45,7 +49,7 @@
          <h1>Az alábbi táblázatban kattintson arra a szegmensre, amelyet megszeretne tekinteni!</h1>
          <table class="lista_tablazat">
              <tr>
-                 <td>Tantermek, előadótermek.</td>
+                 <td>Valami.</td>
                  <!--Itt még nincsen olyan művelet, ami aktuális lenne.-->
                  <td><a href="#">Megtekintés</a></td>
              </tr>

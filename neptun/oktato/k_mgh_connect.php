@@ -1,4 +1,7 @@
 <?php
+
+include '../authentication/oktato_auth_check.php';
+
 $kod = $_POST['kod'];
 $cim = $_POST['cim'];
 $szemeszter = $_POST['szemeszter'];

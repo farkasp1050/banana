@@ -10,6 +10,14 @@
     background-color: darkred;
 }
 
+#hatter {
+    background-color: red;
+}
+
+#oracle_hatter {
+    background-color: yellow;
+}
+
 #kijelentkezes{
     background-color: white;
     text-align: center;
