@@ -7,6 +7,12 @@ $idopont = date("Y-m-d H:i:s", strtotime($_POST['idopont']));
 $ferohely = $_POST['ferohely'];
 $jelleg = $_POST['jelleg'];
 
+if (!is_numeric($azonostio) || !is_numeric($ferohely)) {
+    // Ha a heti óraszám vagy a férőhely nem szám, akkor visszatérünk a regisztráció oldalra és kiírjuk egy hibaüzenetet
+    header("Location: ../msg_screens/nem_szam.php");
+    exit(); // Fontos, hogy a kód leálljon, és ne folytassa a következő lépéseket
+}
+
 // Oracle adatbázis csatlakozás
 $conn = oci_connect('whitefalcon', 'test123', 'localhost/XE', 'UTF8');
 if (!$conn) {

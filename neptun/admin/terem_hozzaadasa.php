@@ -24,8 +24,10 @@ include '../authentication/admin_auth_check.php';
             <p>elméleti | gyakorlati | tanműhely</p>
             <input type="text" size="40" name="jelleg" placeholder="Jelleg..." required/> <br/>
             <p>Irányítószám + Város + Utca + Házszám</p>
-            <input type="text" size="40" name="cim" placeholder="Cím..." required/> <br/><br>
-            <input type="text" size="40" name="emelet" placeholder="Emelet..." required/> <br/><br>
+            <input type="text" size="40" name="cim" placeholder="Cím..." required/> <br/>
+            <p>Az emeletet egyetlen számként adja meg!</p>
+            <input type="text" size="40" name="emelet" placeholder="Emelet..." required/> <br/>
+            <p>Az ajtószámot egyetlen számként adja meg!</p>
             <input type="text" size="40" name="ajto" placeholder="Ajtó..." required/> <br/><br>
             <input id="alaphelyzet" type="reset" value="Alaphelyzet"/>
             <input id="regisztracio" type="submit" value="Kész" name="v_mgh"/><br>

@@ -20,6 +20,19 @@ $beosztas = $_POST['beosztas'];
 $kepesites = $_POST['kepesites'];
 $tanszek = $_POST['tanszek'];
 
+if (!preg_match('/@(stud|teach)\.hu$/', $email)) {
+    // Ha nem megfelelő a domain, akkor visszatérünk a regisztráció oldalra és kiírjuk egy hibaüzenetet
+    header("Location: ../msg_screens/hibas_email.php");
+    exit(); // Fontos, hogy a kód leálljon, és ne folytassa a következő lépéseket
+}
+
+// Ellenőrizze, hogy a két jelszó megegyezik-e
+if ($jelszo !== $jelszo_ujra) {
+    // Ha nem egyezik meg a két jelszó, akkor visszatérünk a regisztráció oldalra és kiírjuk egy hibaüzenetet
+    header("Location: ../msg_screens/jelszavak_nem_egyeznek.php");
+    exit(); // Fontos, hogy a kód leálljon, és ne folytassa a következő lépéseket
+}
+
 // Ellenőrizze, hogy a két jelszó megegyezik-e
 if ($jelszo !== $jelszo_ujra) {
     // Ha nem egyezik meg a két jelszó, akkor visszatérünk a regisztráció oldalra és kiírjuk egy hibaüzenetet

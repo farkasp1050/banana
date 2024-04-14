@@ -9,6 +9,12 @@ $cim = $_POST['cim'];
 $emelet = $_POST['emelet'];
 $ajto = $_POST['ajto'];
 
+if (!is_numeric($ferohely) || !is_numeric($emelet) || !is_numeric($ajto)) {
+    // Ha a heti óraszám vagy a férőhely nem szám, akkor visszatérünk a regisztráció oldalra és kiírjuk egy hibaüzenetet
+    header("Location: ../msg_screens/nem_szam.php");
+    exit(); // Fontos, hogy a kód leálljon, és ne folytassa a következő lépéseket
+}
+
 // Oracle adatbázis csatlakozás
 $conn = oci_connect('whitefalcon', 'test123', 'localhost/XE', 'UTF8');
 if (!$conn) {
