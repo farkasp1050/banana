@@ -23,6 +23,7 @@ include '../authentication/general_auth_check.php';
             <input type="text" size="40" name="email" placeholder="Felhasználónév..." required/> <br/><br/>
             <input type="password" size="40" name="jelszo" placeholder="Jelszó..." required/> <br/><br/>
             <input class="bejelentkezes_gomb" type="submit" value="Bejelentkezés" name="bejelentike"/>
+            <br><br>Nincs még fiókod? <a href="regisztracio.php">Regisztráció</a>
             </form>
         </div>
     </main>

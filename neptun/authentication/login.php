@@ -24,7 +24,8 @@ if (!$conn) {
         } else {
             $row = oci_fetch_assoc($stmt);
             if ($row) {
-                if ($row['JELSZO'] === $jelszo) {
+                // Jelszó ellenőrzése
+                if (password_verify($jelszo, $row['JELSZO'])) {
                     $_SESSION['user_email'] = $email; // Felhasználó email-jének tárolása session változóban.
                     if (strpos($email, '@teach.hu') !== false) {
                         $_SESSION['user_type'] = 'oktato'; // Felhasználó email típusának tárolása session változóban.
