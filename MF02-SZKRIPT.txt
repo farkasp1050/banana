@@ -1,0 +1,326 @@
+-- ETR rendszer --
+
+-- Elősször a kapcsoló táblákat töröljük:
+--DROP TABLE OKTATAS;
+--DROP TABLE SZAMONKERES;
+--DROP TABLE KURZUSTEREM;
+--DROP TABLE VIZSGATEREM;
+--DROP TABLE BEFIZET;
+-- Ezt követően a fő táblákat:
+--DROP TABLE KURZUS;
+--DROP TABLE VIZSGA;
+--DROP TABLE TEREM;
+--DROP TABLE FELHASZNALO;
+--DROP TABLE ALLAM;
+
+-- FŐTÁBLÁK LÉTREHOZÁSA---------------------------------------------------------------------------------------------------------
+
+CREATE TABLE FELHASZNALO (
+    email VARCHAR2(30) PRIMARY KEY,
+    jelszo VARCHAR2(100),
+    nev VARCHAR2(30),
+    szuletesi_datum DATE,
+    szuletesi_hely VARCHAR2(30),
+    kar VARCHAR2(30),
+    szak VARCHAR2(30),
+    szemeszter VARCHAR2(30),
+    atlag FLOAT(3),
+    jogviszony VARCHAR2(30),
+    statusz VARCHAR2(30),
+    napszak VARCHAR2(30),
+    beosztas VARCHAR2(30),
+    kepesites VARCHAR2(30),
+    tanszek VARCHAR2(30)
+);
+
+CREATE TABLE ALLAM (
+    nev VARCHAR2(30) PRIMARY KEY,
+    szamlaszam INT
+);
+
+create table VIZSGA(
+  azonosito INT PRIMARY KEY,
+  idopont TIMESTAMP,
+  ferohely INT,
+  jelleg VARCHAR2(30)
+);
+
+create table KURZUS(
+  kod VARCHAR2(30) PRIMARY KEY,
+  cim VARCHAR2(50),
+  ferohely INT,
+  jelleg VARCHAR2(30),
+  szemeszter VARCHAR2(30),
+  heti_oraszam INT
+);
+
+create table TEREM(
+	nev VARCHAR2(30) PRIMARY KEY,
+	ferohely INT,
+	jelleg VARCHAR2(30),
+	cim VARCHAR2(50),
+	emelet INT,
+	ajto INT
+);
+
+-- KAPCSOLÓ TÁBLÁK LÉTREHOZÁSA -------------------------------------------------------------------------------------------------
+
+CREATE TABLE KURZUSTEREM (
+    kod VARCHAR2(30) NOT NULL,
+    nev VARCHAR2(30) NOT NULL,
+    FOREIGN KEY (kod) REFERENCES KURZUS(kod) ON DELETE CASCADE,
+    FOREIGN KEY (nev) REFERENCES TEREM(nev) ON DELETE CASCADE
+);
+
+CREATE TABLE VIZSGATEREM (
+    azonosito INT NOT NULL,
+    nev VARCHAR2(30) NOT NULL,
+    FOREIGN KEY (azonosito) REFERENCES VIZSGA(azonosito) ON DELETE CASCADE,
+    FOREIGN KEY (nev) REFERENCES TEREM(nev) ON DELETE CASCADE
+);
+
+CREATE TABLE BEFIZET (
+    email VARCHAR2(30) NOT NULL,
+    nev VARCHAR2(30) NOT NULL,
+    FOREIGN KEY (email) REFERENCES FELHASZNALO(email) ON DELETE CASCADE,
+    FOREIGN KEY (nev) REFERENCES ALLAM(nev) ON DELETE CASCADE,
+    osszeg INT,
+    hatarido DATE,
+    datum DATE
+);
+
+CREATE TABLE OKTATAS (
+    email VARCHAR2(30) NOT NULL,
+    kod VARCHAR(30) NOT NULL,
+    FOREIGN KEY (email) REFERENCES FELHASZNALO(email) ON DELETE CASCADE,
+    FOREIGN KEY (kod) REFERENCES KURZUS(kod) ON DELETE CASCADE
+);
+
+CREATE TABLE SZAMONKERES (
+    email VARCHAR2(30) NOT NULL,
+    azonosito INT NOT NULL,
+    FOREIGN KEY (email) REFERENCES FELHASZNALO(email) ON DELETE CASCADE,
+    FOREIGN KEY (azonosito) REFERENCES VIZSGA(azonosito) ON DELETE CASCADE
+);
+
+-- A FŐTÁBLÁK FELTÖLTÉSE -------------------------------------------------------------------------------------------------------
+
+-- Termek generálása.
+INSERT INTO TEREM VALUES ('Kálmán János', 999, 'elméleti', '6722, Szeged, Ady tér 10', 2, 10);
+INSERT INTO TEREM VALUES ('Kiss János', 999, 'elméleti', '6722, Szeged, Ady tér 10', 1, 2);
+INSERT INTO TEREM VALUES ('Horváth Benedek', 999, 'elméleti', '6722, Szeged, Ady tér 10', 2, 20);
+INSERT INTO TEREM VALUES ('Tóth Tibor', 30, 'gyakorlati', '6725, Szeged, Tisza Lajos krt. 103', 3, 220);
+INSERT INTO TEREM VALUES ('Korvin Gyula', 60, 'gyakorlati', '6725, Szeged, Tisza Lajos krt. 103', 1, 110);
+INSERT INTO TEREM VALUES ('Bálint Jenő', 26, 'tanműhely', '6725, Szeged, Tisza Lajos krt. 103', 1, 1);
+INSERT INTO TEREM VALUES ('Molnár Tivadar', 60, 'gyakorlati', '6722, Szeged, Ady tér 10', 3, 227);
+INSERT INTO TEREM VALUES ('Neumann János', 60, 'gyakorlati', '6720, Szeged, Aradi vértanúk tere', 3, 105);
+INSERT INTO TEREM VALUES ('Kelcz Miklós', 60, 'elméleti', '6720, Szeged, Aradi vértanúk tere', 2, 22);
+INSERT INTO TEREM VALUES ('Pintér Mária', 30, 'elméleti', '6720, Szeged, Aradi vértanúk tere', 1, 9);
+
+-- Kurzusok generálása.
+INSERT INTO KURZUS VALUES ('MBNX311E', 'Kalkulus I ea', 999, 'előadás', '2022/2023/I', 2);
+INSERT INTO KURZUS VALUES ('MBNX311G', 'Kalkulus I gyak', 30, 'gyakorlat', '2022/2023/I', 2);
+INSERT INTO KURZUS VALUES ('IB104E', 'Programozás alapjai ea', 600, 'előadás', '2022/2023/I', 3);
+INSERT INTO KURZUS VALUES ('IB104L', 'Programozás alapjai gyak', 60, 'labor', '2022/2023/I', 1);
+INSERT INTO KURZUS VALUES ('IB407E', 'Számítógép hálózatok ea', 600, 'előadás', '2022/2023/I', 2);
+INSERT INTO KURZUS VALUES ('IB407G', 'Számítógép hálózatok gyak', 60, 'labor', '2022/2023/I', 1);
+INSERT INTO Kurzus VALUES ('MBNXK262E', 'Sztochasztika alapjai ea', 999, 'előadás', '2022/2023/II', 2);
+INSERT INTO Kurzus VALUES ('MBNXK262G', 'Sztochasztika alapjai gyak', 30, 'gyakorlat', '2022/2023/II', 2);
+INSERT INTO Kurzus VALUES ('IB714E', 'Webtervezés ea', 540, 'előadás', '2022/2023/II', 3);
+INSERT INTO Kurzus VALUES ('IB714G', 'Webtervezés gyak', 60, 'gyakorlat', '2022/2023/II', 1);
+INSERT INTO Kurzus VALUES ('IB204E', 'Programozás I ea', 570, 'előadás', '2022/2023/II', 2);
+INSERT INTO Kurzus VALUES ('IB204L', 'Programozás I gyak', 60, 'labor', '2022/2023/II', 2);
+INSERT INTO Kurzus VALUES ('IBK301E', 'Közelítő és szimbolikus számok I ea', 400, 'előadás', '2023/2024/I', 2);
+INSERT INTO Kurzus VALUES ('IBK301G', 'Közelítő és szimbolikus számok I gyak', 25, 'gyakorlat', '2023/2024/I', 1);
+INSERT INTO Kurzus VALUES ('IBK304E', 'Algoritmusok és adatszerkezetek ea', 500, 'előadás', '2023/2024/I', 2);
+INSERT INTO Kurzus VALUES ('IBK304G', 'Algoritmusok és adatszerkezetek gyak', 25, 'gyakorlat', '2023/2024/I', 1);
+INSERT INTO Kurzus VALUES ('MBKXK114E', 'Diszkrét matematika ea', 999, 'előadás', '2023/2024/I', 2);
+INSERT INTO Kurzus VALUES ('MBKXK114G', 'Diszkrét matematika gyak', 30, 'gyakorlat', '2023/2024/I', 2);
+INSERT INTO Kurzus VALUES ('IBK403E', 'Formális nyelvek ea', 300, 'előadás', '2023/2024/II', 2);
+INSERT INTO Kurzus VALUES ('IBK403G', 'Formális nyelvek gyak', 30, 'gyakorlat', '2023/2024/II', 1);
+INSERT INTO Kurzus VALUES ('IB402E', 'Digitális képfeldolgozás ea', 400, 'előadás', '2023/2024/II', 2);
+INSERT INTO Kurzus VALUES ('IB402G', 'Digitális képfeldolgozás gyak', 30, 'gyakorlat', '2023/2024/II', 1);
+INSERT INTO Kurzus VALUES ('IB004E', 'Statisztikai szoftverek ea', 26, 'előadás', '2023/2024/II', 2);
+INSERT INTO Kurzus VALUES ('IB004G1', 'Statisztikai szoftverek gyak', 26, 'gyakorlat', '2023/2024/II', 2);
+
+-- Vizsgák generálása.
+INSERT INTO VIZSGA VALUES (1, TIMESTAMP '2024-05-15 08:00:00', '23', 'írásbeli');
+INSERT INTO VIZSGA VALUES (2, TIMESTAMP '2024-06-20 09:30:00', '34', 'szóbeli');
+INSERT INTO VIZSGA VALUES (3, TIMESTAMP '2024-07-10 10:15:00', '45', 'írásbeli');
+INSERT INTO VIZSGA VALUES (4, TIMESTAMP '2024-08-05 11:45:00', '56', 'gyakorlati');
+INSERT INTO VIZSGA VALUES (5, TIMESTAMP '2024-09-12 13:20:00', '67', 'szóbeli');
+INSERT INTO VIZSGA VALUES (6, TIMESTAMP '2024-10-18 14:10:00', '8', 'írásbeli');
+INSERT INTO VIZSGA VALUES (7, TIMESTAMP '2024-11-25 15:00:00', '9', 'szóbeli');
+INSERT INTO VIZSGA VALUES (8, TIMESTAMP '2024-12-03 16:30:00', '10', 'írásbeli');
+INSERT INTO VIZSGA VALUES (9, TIMESTAMP '2024-01-08 08:45:00', '19', 'gyakorlati');
+INSERT INTO VIZSGA VALUES (10, TIMESTAMP '2024-02-14 09:20:00', '12', 'írásbeli');
+INSERT INTO VIZSGA VALUES (11, TIMESTAMP '2024-03-22 10:00:00', '23', 'szóbeli');
+INSERT INTO VIZSGA VALUES (12, TIMESTAMP '2024-04-30 11:30:00', '34', 'írásbeli');
+INSERT INTO VIZSGA VALUES (13, TIMESTAMP '2024-05-10 13:00:00', '45', 'gyakorlati');
+INSERT INTO VIZSGA VALUES (14, TIMESTAMP '2024-06-25 14:45:00', '56', 'szóbeli');
+INSERT INTO VIZSGA VALUES (15, TIMESTAMP '2024-07-05 15:20:00', '67', 'írásbeli');
+INSERT INTO VIZSGA VALUES (16, TIMESTAMP '2024-08-08 16:10:00', '78', 'szóbeli');
+INSERT INTO VIZSGA VALUES (17, TIMESTAMP '2024-09-19 08:30:00', '89', 'írásbeli');
+INSERT INTO VIZSGA VALUES (18, TIMESTAMP '2024-10-28 09:00:00', '90', 'gyakorlati');
+INSERT INTO VIZSGA VALUES (19, TIMESTAMP '2024-11-30 10:45:00', '14', 'szóbeli');
+INSERT INTO VIZSGA VALUES (20, TIMESTAMP '2024-12-15 11:20:00', '12', 'írásbeli');
+
+-- Államok generálása
+INSERT INTO ALLAM VALUES ('Magyar állam', 123456789);
+INSERT INTO ALLAM VALUES ('Osztrák állam', 223456789);
+INSERT INTO ALLAM VALUES ('Szlovén állam', 323456789);
+INSERT INTO ALLAM VALUES ('Szerb állam', 423456789);
+INSERT INTO ALLAM VALUES ('Román állam', 523456789);
+
+-- Hallgatók generálása
+INSERT INTO FELHASZNALO VALUES ('s123123@stud.hu', 'jelszo', 'Kovács István', TO_DATE('2000-01-01', 'yyyy-mm-dd'), 'Budapest', 'Informatikai Kar', 'Programtervező Informatikus', '3', 4.25, 'Önköltséges', 'Aktív', 'Nappali', NULL, NULL, NULL);
+INSERT INTO FELHASZNALO VALUES ('s456456@stud.hu', 'jelszo', 'Szabó Ferenc', TO_DATE('1998-07-20', 'yyyy-mm-dd'), 'Szeged', 'Műszaki Kar', 'Gépészmérnöki', '2', 3.75, 'Önköltséges', 'Aktív', 'Nappali', NULL, NULL, NULL);
+INSERT INTO FELHASZNALO VALUES ('s789789@stud.hu', 'jelszo', 'Tóth Eszter', TO_DATE('1999-05-15', 'yyyy-mm-dd'), 'Debrecen', 'Gazdasági Kar', 'Közgazdász', '5', 4.00, 'Önköltséges', 'Aktív', 'Nappali', NULL, NULL, NULL);
+INSERT INTO FELHASZNALO VALUES ('s987987@stud.hu', 'jelszo', 'Nagy Anna', TO_DATE('1985-05-10', 'yyyy-mm-dd'), 'Debrecen', 'Gazdasági Kar', 'Pénzügy', '6', 3.55, 'Önköltséges', 'Aktív', 'Nappali', NULL, NULL, NULL);
+INSERT INTO FELHASZNALO VALUES ('s654654@stud.hu', 'jelszo', 'Szekeres Zsolt', TO_DATE('1997-09-25', 'yyyy-mm-dd'), 'Budapest', 'Művészeti Kar', 'Színész', '4', 4.10, 'Önköltséges', 'Aktív', 'Nappali', NULL, NULL, NULL);
+INSERT INTO FELHASZNALO VALUES ('s321321@stud.hu', 'jelszo', 'Szűcs Anna', TO_DATE('2002-01-05', 'yyyy-mm-dd'), 'Szombathely', 'Pedagógiai Kar', 'Tanító', '1', 4.50, 'Állami', 'Aktív', 'Nappali', NULL, NULL, NULL);
+INSERT INTO FELHASZNALO VALUES ('s600091@stud.hu', 'jelszo', 'Horváth Máté', TO_DATE('1998-11-15', 'yyyy-mm-dd'), 'Miskolc', 'Műszaki Kar', 'Építőmérnök', '3', 3.80, 'Állami', 'Aktív', 'Nappali', NULL, NULL, NULL);
+INSERT INTO FELHASZNALO VALUES ('s600092@stud.hu', 'jelszo', 'Kiss Petra', TO_DATE('2000-07-30', 'yyyy-mm-dd'), 'Eger', 'Gazdasági Kar', 'Pénzügy', '2', 3.70, 'Állami', 'Aktív', 'Nappali', NULL, NULL, NULL);
+INSERT INTO FELHASZNALO VALUES ('s600093@stud.hu', 'jelszo', 'Tóth Andrea', TO_DATE('1999-04-20', 'yyyy-mm-dd'), 'Győr', 'Művészeti Kar', 'Fotográfus', '4', 4.20, 'Állami', 'Aktív', 'Nappali', NULL, NULL, NULL);
+INSERT INTO FELHASZNALO VALUES ('s600094@stud.hu', 'jelszo', 'Kovács László', TO_DATE('1998-12-12', 'yyyy-mm-dd'), 'Székesfehérvár', 'Természettudományi Kar', 'Fizikus', '3', 3.95, 'Állami', 'Aktív', 'Nappali', NULL, NULL, NULL);
+INSERT INTO FELHASZNALO VALUES ('s600095@stud.hu', 'jelszo', 'Kiss Viktor', TO_DATE('2001-06-08', 'yyyy-mm-dd'), 'Debrecen', 'Informatikai Kar', 'Programtervező Informatikus', '2', 3.85, 'Állami', 'Aktív', 'Nappali', NULL, NULL, NULL);
+INSERT INTO FELHASZNALO VALUES ('s600096@stud.hu', 'jelszo', 'Nagy Dóra', TO_DATE('1997-09-12', 'yyyy-mm-dd'), 'Pécs', 'Pedagógiai Kar', 'Tanító', '3', 4.35, 'Állami', 'Aktív', 'Nappali', NULL, NULL, NULL);
+INSERT INTO FELHASZNALO VALUES ('s600097@stud.hu', 'jelszo', 'Szabó Péter', TO_DATE('1999-03-18', 'yyyy-mm-dd'), 'Pécs', 'Műszaki Kar', 'Gépészmérnöki', '4', 4.10, 'Állami', 'Aktív', 'Nappali', NULL, NULL, NULL);
+INSERT INTO FELHASZNALO VALUES ('s600098@stud.hu', 'jelszo', 'Kiss Eszter', TO_DATE('2000-09-02', 'yyyy-mm-dd'), 'Budapest', 'Gazdasági Kar', 'Közgazdász', '5', 4.20, 'Állami', 'Aktív', 'Nappali', NULL, NULL, NULL);
+INSERT INTO FELHASZNALO VALUES ('s600081@stud.hu', 'jelszo', 'Németh Márta', TO_DATE('1998-12-05', 'yyyy-mm-dd'), 'Szeged', 'Informatikai Kar', 'Programtervező Informatikus', '3', 3.95, 'Állami', 'Aktív', 'Nappali', NULL, NULL, NULL);
+INSERT INTO FELHASZNALO VALUES ('s600082@stud.hu', 'jelszo', 'Tóth Ferenc', TO_DATE('1997-10-30', 'yyyy-mm-dd'), 'Debrecen', 'Művészeti Kar', 'Színész', '4', 4.30, 'Állami', 'Aktív', 'Nappali', NULL, NULL, NULL);
+INSERT INTO FELHASZNALO VALUES ('s600083@stud.hu', 'jelszo', 'Kovács Éva', TO_DATE('1999-01-20', 'yyyy-mm-dd'), 'Székesfehérvár', 'Természettudományi Kar', 'Fizikus', '3', 3.75, 'Állami', 'Aktív', 'Nappali', NULL, NULL, NULL);
+INSERT INTO FELHASZNALO VALUES ('s600084@stud.hu', 'jelszo', 'Szabó Zoltán', TO_DATE('2001-07-10', 'yyyy-mm-dd'), 'Győr', 'Pedagógiai Kar', 'Tanító', '2', 3.80, 'Állami', 'Aktív', 'Nappali', NULL, NULL, NULL);
+INSERT INTO FELHASZNALO VALUES ('s600085@stud.hu', 'jelszo', 'Nagy Ágnes', TO_DATE('1998-06-14', 'yyyy-mm-dd'), 'Miskolc', 'Gazdasági Kar', 'Pénzügy', '5', 3.90, 'Állami', 'Aktív', 'Nappali', NULL, NULL, NULL);
+INSERT INTO FELHASZNALO VALUES ('s600086@stud.hu', 'jelszo', 'Kiss Márton', TO_DATE('2000-02-28', 'yyyy-mm-dd'), 'Eger', 'Műszaki Kar', 'Építőmérnök', '2', 4.00, 'Állami', 'Aktív', 'Nappali', NULL, NULL, NULL);
+INSERT INTO FELHASZNALO VALUES ('s600087@stud.hu', 'jelszo', 'Horváth Anna', TO_DATE('1999-09-17', 'yyyy-mm-dd'), 'Szombathely', 'Informatikai Kar', 'Programtervező Informatikus', '3', 3.85, 'Állami', 'Aktív', 'Nappali', NULL, NULL, NULL);
+INSERT INTO FELHASZNALO VALUES ('s600088@stud.hu', 'jelszo', 'Tóth Ádám', TO_DATE('1997-11-05', 'yyyy-mm-dd'), 'Budapest', 'Gazdasági Kar', 'Közgazdász', '4', 4.25, 'Állami', 'Aktív', 'Nappali', NULL, NULL, NULL);
+INSERT INTO FELHASZNALO VALUES ('s600089@stud.hu', 'jelszo', 'Takács Gergő', TO_DATE('1998-02-28', 'yyyy-mm-dd'), 'Budapest', 'Informatikai Kar', 'Programtervező Informatikus', '4', 4.15, 'Állami', 'Aktív', 'Nappali', NULL, NULL, NULL);
+INSERT INTO FELHASZNALO VALUES ('s600090@stud.hu', 'jelszo', 'Szabó Anna', TO_DATE('1999-11-05', 'yyyy-mm-dd'), 'Szeged', 'Műszaki Kar', 'Gépészmérnöki', '2', 3.70, 'Állami', 'Aktív', 'Nappali', NULL, NULL, NULL);
+INSERT INTO FELHASZNALO VALUES ('s700001@stud.hu', 'jelszo', 'Horvát Péter', TO_DATE('2000-08-17', 'yyyy-mm-dd'), 'Debrecen', 'Gazdasági Kar', 'Közgazdász', '3', 4.05, 'Állami', 'Aktív', 'Nappali', NULL, NULL, NULL);
+INSERT INTO FELHASZNALO VALUES ('s700002@stud.hu', 'jelszo', 'Kovács Sára', TO_DATE('2001-03-10', 'yyyy-mm-dd'), 'Debrecen', 'Gazdasági Kar', 'Pénzügy', '2', 3.60, 'Állami', 'Aktív', 'Nappali', NULL, NULL, NULL);
+INSERT INTO FELHASZNALO VALUES ('s700003@stud.hu', 'jelszo', 'Szekeres Patrik', TO_DATE('1998-09-22', 'yyyy-mm-dd'), 'Budapest', 'Művészeti Kar', 'Színész', '4', 4.20, 'Állami', 'Aktív', 'Nappali', NULL, NULL, NULL);
+INSERT INTO FELHASZNALO VALUES ('s700004@stud.hu', 'jelszo', 'Takács Dóra', TO_DATE('2000-12-15', 'yyyy-mm-dd'), 'Szombathely', 'Pedagógiai Kar', 'Tanító', '3', 4.40, 'Állami', 'Aktív', 'Nappali', NULL, NULL, NULL);
+INSERT INTO FELHASZNALO VALUES ('s700005@stud.hu', 'jelszo', 'Nagy Attila', TO_DATE('1999-07-30', 'yyyy-mm-dd'), 'Miskolc', 'Műszaki Kar', 'Építőmérnök', '2', 3.75, 'Állami', 'Aktív', 'Nappali', NULL, NULL, NULL);
+INSERT INTO FELHASZNALO VALUES ('s700006@stud.hu', 'jelszo', 'Kiss Márta', TO_DATE('2001-04-20', 'yyyy-mm-dd'), 'Eger', 'Gazdasági Kar', 'Pénzügy', '4', 3.90, 'Állami', 'Aktív', 'Nappali', NULL, NULL, NULL);
+INSERT INTO FELHASZNALO VALUES ('s700007@stud.hu', 'jelszo', 'Tóth Gábor', TO_DATE('1998-10-12', 'yyyy-mm-dd'), 'Győr', 'Művészeti Kar', 'Fotográfus', '5', 4.30, 'Állami', 'Aktív', 'Nappali', NULL, NULL, NULL);
+INSERT INTO FELHASZNALO VALUES ('s700008@stud.hu', 'jelszo', 'Kovács László', TO_DATE('1999-05-08', 'yyyy-mm-dd'), 'Székesfehérvár', 'Természettudományi Kar', 'Fizikus', '4', 4.10, 'Állami', 'Aktív', 'Nappali', NULL, NULL, NULL);
+INSERT INTO FELHASZNALO VALUES ('s700009@stud.hu', 'jelszo', 'Kiss Tamás', TO_DATE('2000-08-15', 'yyyy-mm-dd'), 'Debrecen', 'Informatikai Kar', 'Programtervező Informatikus', '3', 4.15, 'Állami', 'Aktív', 'Nappali', NULL, NULL, NULL);
+INSERT INTO FELHASZNALO VALUES ('s700010@stud.hu', 'jelszo', 'Nagy Zsuzsa', TO_DATE('1998-12-10', 'yyyy-mm-dd'), 'Pécs', 'Pedagógiai Kar', 'Tanító', '4', 4.25, 'Állami', 'Aktív', 'Nappali', NULL, NULL, NULL);
+INSERT INTO FELHASZNALO VALUES ('s700011@stud.hu', 'jelszo', 'Szentmárton Péter', TO_DATE('1999-03-22', 'yyyy-mm-dd'), 'Budapest', 'Informatikai Kar', 'Programtervező Informatikus', '5', 4.40, 'Állami', 'Aktív', 'Nappali', NULL, NULL, NULL);
+INSERT INTO FELHASZNALO VALUES ('s700027@stud.hu', 'jelszo', 'Szabó Ágnes', TO_DATE('1999-04-08', 'yyyy-mm-dd'), 'Pécs', 'Műszaki Kar', 'Építőmérnök', '3', 3.80, 'Állami', 'Aktív', 'Nappali', NULL, NULL, NULL);
+INSERT INTO FELHASZNALO VALUES ('s700028@stud.hu', 'jelszo', 'Horváth Anna', TO_DATE('2001-09-20', 'yyyy-mm-dd'), 'Debrecen', 'Gazdasági Kar', 'Pénzügy', '4', 3.90, 'Állami', 'Aktív', 'Nappali', NULL, NULL, NULL);
+INSERT INTO FELHASZNALO VALUES ('s700029@stud.hu', 'jelszo', 'Kovács Márton', TO_DATE('1998-02-28', 'yyyy-mm-dd'), 'Budapest', 'Informatikai Kar', 'Programtervező Informatikus', '5', 4.30, 'Állami', 'Aktív', 'Nappali', NULL, NULL, NULL);
+INSERT INTO FELHASZNALO VALUES ('s700030@stud.hu', 'jelszo', 'Szűcs Bea', TO_DATE('1997-06-15', 'yyyy-mm-dd'), 'Szombathely', 'Művészeti Kar', 'Fotográfus', '2', 3.70, 'Állami', 'Aktív', 'Nappali', NULL, NULL, NULL);
+INSERT INTO FELHASZNALO VALUES ('s700031@stud.hu', 'jelszo', 'Takács Gábor', TO_DATE('2000-12-03', 'yyyy-mm-dd'), 'Miskolc', 'Pedagógiai Kar', 'Tanító', '3', 4.00, 'Állami', 'Aktív', 'Nappali', NULL, NULL, NULL);
+INSERT INTO FELHASZNALO VALUES ('s700032@stud.hu', 'jelszo', 'Nagy Zoltán', TO_DATE('2002-03-10', 'yyyy-mm-dd'), 'Eger', 'Műszaki Kar', 'Gépészmérnöki', '1', 3.60, 'Állami', 'Aktív', 'Nappali', NULL, NULL, NULL);
+INSERT INTO FELHASZNALO VALUES ('s700033@stud.hu', 'jelszo', 'Kiss Réka', TO_DATE('1999-08-25', 'yyyy-mm-dd'), 'Győr', 'Gazdasági Kar', 'Közgazdász', '2', 3.95, 'Állami', 'Aktív', 'Nappali', NULL, NULL, NULL);
+INSERT INTO FELHASZNALO VALUES ('s700034@stud.hu', 'jelszo', 'Tóth Ferenc', TO_DATE('1998-07-15', 'yyyy-mm-dd'), 'Székesfehérvár', 'Művészeti Kar', 'Színész', '5', 4.20, 'Állami', 'Aktív', 'Nappali', NULL, NULL, NULL);
+INSERT INTO FELHASZNALO VALUES ('s700035@stud.hu', 'jelszo', 'Kovács Tünde', TO_DATE('2000-05-18', 'yyyy-mm-dd'), 'Debrecen', 'Informatikai Kar', 'Programtervező Informatikus', '4', 4.10, 'Állami', 'Aktív', 'Nappali', NULL, NULL, NULL);
+INSERT INTO FELHASZNALO VALUES ('s700036@stud.hu', 'jelszo', 'Kiss Sándor', TO_DATE('1997-11-20', 'yyyy-mm-dd'), 'Pécs', 'Pedagógiai Kar', 'Tanító', '3', 4.30, 'Állami', 'Aktív', 'Nappali', NULL, NULL, NULL);
+INSERT INTO FELHASZNALO VALUES ('s700037@stud.hu', 'jelszo', 'Nagy Katalin', TO_DATE('2001-01-30', 'yyyy-mm-dd'), 'Budapest', 'Műszaki Kar', 'Építőmérnök', '2', 3.85, 'Állami', 'Aktív', 'Nappali', NULL, NULL, NULL);
+INSERT INTO FELHASZNALO VALUES ('s700038@stud.hu', 'jelszo', 'Szabó Orsolya', TO_DATE('1999-06-22', 'yyyy-mm-dd'), 'Szeged', 'Gazdasági Kar', 'Pénzügy', '4', 4.05, 'Állami', 'Aktív', 'Nappali', NULL, NULL, NULL);
+INSERT INTO FELHASZNALO VALUES ('s700039@stud.hu', 'jelszo', 'Horvát András', TO_DATE('1998-09-15', 'yyyy-mm-dd'), 'Debrecen', 'Informatikai Kar', 'Programtervező Informatikus', '5', 4.40, 'Állami', 'Aktív', 'Nappali', NULL, NULL, NULL);
+INSERT INTO FELHASZNALO VALUES ('s700040@stud.hu', 'jelszo', 'Takács Eszter', TO_DATE('2000-04-08', 'yyyy-mm-dd'), 'Szeged', 'Műszaki Kar', 'Gépészmérnöki', '2', 3.90, 'Állami', 'Aktív', 'Nappali', NULL, NULL, NULL);
+INSERT INTO FELHASZNALO VALUES ('s600012@stud.hu', 'jelszo', 'Szűcs Renáta', TO_DATE('2000-10-15', 'yyyy-mm-dd'), 'Szombathely', 'Informatikai Kar', 'Programtervező Informatikus', '3', 4.00, 'Állami', 'Aktív', 'Nappali', NULL, NULL, NULL);
+INSERT INTO FELHASZNALO VALUES ('s600013@stud.hu', 'jelszo', 'Takács Péter', TO_DATE('1999-07-20', 'yyyy-mm-dd'), 'Miskolc', 'Műszaki Kar', 'Építőmérnök', '2', 3.75, 'Állami', 'Aktív', 'Nappali', NULL, NULL, NULL);
+INSERT INTO FELHASZNALO VALUES ('s600014@stud.hu', 'jelszo', 'Nagy István', TO_DATE('1998-12-30', 'yyyy-mm-dd'), 'Eger', 'Gazdasági Kar', 'Pénzügy', '1', 3.55, 'Állami', 'Aktív', 'Nappali', NULL, NULL, NULL);
+INSERT INTO FELHASZNALO VALUES ('s600015@stud.hu', 'jelszo', 'Kiss Eszter', TO_DATE('2001-09-25', 'yyyy-mm-dd'), 'Győr', 'Pedagógiai Kar', 'Tanító', '5', 4.40, 'Állami', 'Aktív', 'Nappali', NULL, NULL, NULL);
+INSERT INTO FELHASZNALO VALUES ('s600016@stud.hu', 'jelszo', 'Tóth László', TO_DATE('1997-08-12', 'yyyy-mm-dd'), 'Székesfehérvár', 'Informatikai Kar', 'Programtervező Informatikus', '4', 4.20, 'Állami', 'Aktív', 'Nappali', NULL, NULL, NULL);
+INSERT INTO FELHASZNALO VALUES ('s600017@stud.hu', 'jelszo', 'Kovács Brigitta', TO_DATE('1999-02-18', 'yyyy-mm-dd'), 'Debrecen', 'Műszaki Kar', 'Gépészmérnöki', '3', 4.05, 'Állami', 'Aktív', 'Nappali', NULL, NULL, NULL);
+INSERT INTO FELHASZNALO VALUES ('s600018@stud.hu', 'jelszo', 'Kiss Máté', TO_DATE('2000-03-05', 'yyyy-mm-dd'), 'Pécs', 'Gazdasági Kar', 'Közgazdász', '2', 3.85, 'Állami', 'Aktív', 'Nappali', NULL, NULL, NULL);
+INSERT INTO FELHASZNALO VALUES ('s600019@stud.hu', 'jelszo', 'Nagy Ágnes', TO_DATE('1998-06-22', 'yyyy-mm-dd'), 'Budapest', 'Pedagógiai Kar', 'Tanító', '1', 4.50, 'Állami', 'Aktív', 'Nappali', NULL, NULL, NULL);
+INSERT INTO FELHASZNALO VALUES ('s600020@stud.hu', 'jelszo', 'Szabó Orsolya', TO_DATE('2001-11-10', 'yyyy-mm-dd'), 'Szeged', 'Műszaki Kar', 'Építőmérnök', '5', 4.30, 'Állami', 'Aktív', 'Nappali', NULL, NULL, NULL);
+INSERT INTO FELHASZNALO VALUES ('s600021@stud.hu', 'jelszo', 'Takács Rezső', TO_DATE('1998-12-01', 'yyyy-mm-dd'), 'Szeged', 'Informatikai Kar', 'Programtervező Informatikus', '3', 4.15, 'Állami', 'Aktív', 'Nappali', NULL, NULL, NULL);
+INSERT INTO FELHASZNALO VALUES ('s600022@stud.hu', 'jelszo', 'Szabó Viktória', TO_DATE('1999-08-20', 'yyyy-mm-dd'), 'Pécs', 'Gazdasági Kar', 'Közgazdász', '4', 4.25, 'Állami', 'Aktív', 'Nappali', NULL, NULL, NULL);
+INSERT INTO FELHASZNALO VALUES ('s600023@stud.hu', 'jelszo', 'Horvát Márton', TO_DATE('2001-07-10', 'yyyy-mm-dd'), 'Debrecen', 'Műszaki Kar', 'Gépészmérnöki', '2', 3.70, 'Állami', 'Aktív', 'Nappali', NULL, NULL, NULL);
+INSERT INTO FELHASZNALO VALUES ('s600024@stud.hu', 'jelszo', 'Kovács Kitti', TO_DATE('1998-04-12', 'yyyy-mm-dd'), 'Budapest', 'Gazdasági Kar', 'Pénzügy', '5', 4.00, 'Állami', 'Aktív', 'Nappali', NULL, NULL, NULL);
+INSERT INTO FELHASZNALO VALUES ('s600025@stud.hu', 'jelszo', 'Szűcs Soma', TO_DATE('2000-01-15', 'yyyy-mm-dd'), 'Szombathely', 'Pedagógiai Kar', 'Tanító', '3', 4.40, 'Állami', 'Aktív', 'Nappali', NULL, NULL, NULL);
+INSERT INTO FELHASZNALO VALUES ('s600026@stud.hu', 'jelszo', 'Takács Dóra', TO_DATE('1997-09-20', 'yyyy-mm-dd'), 'Miskolc', 'Művészeti Kar', 'Színész', '2', 3.65, 'Állami', 'Aktív', 'Nappali', NULL, NULL, NULL);
+INSERT INTO FELHASZNALO VALUES ('s600001@stud.hu', 'jelszo', 'Nagy Attila', TO_DATE('1999-06-30', 'yyyy-mm-dd'), 'Eger', 'Gazdasági Kar', 'Pénzügy', '1', 3.45, 'Állami', 'Aktív', 'Nappali', NULL, NULL, NULL);
+INSERT INTO FELHASZNALO VALUES ('s600002@stud.hu', 'jelszo', 'Kiss Eszter', TO_DATE('2001-05-25', 'yyyy-mm-dd'), 'Győr', 'Művészeti Kar', 'Fotográfus', '5', 4.20, 'Állami', 'Aktív', 'Nappali', NULL, NULL, NULL);
+INSERT INTO FELHASZNALO VALUES ('s600003@stud.hu', 'jelszo', 'Tóth Ferenc', TO_DATE('1998-08-12', 'yyyy-mm-dd'), 'Székesfehérvár', 'Informatikai Kar', 'Programtervező Informatikus', '4', 4.10, 'Állami', 'Aktív', 'Nappali', NULL, NULL, NULL);
+INSERT INTO FELHASZNALO VALUES ('s600004@stud.hu', 'jelszo', 'Kovács Márta', TO_DATE('1999-03-18', 'yyyy-mm-dd'), 'Debrecen', 'Műszaki Kar', 'Építőmérnök', '3', 3.95, 'Állami', 'Aktív', 'Nappali', NULL, NULL, NULL);
+INSERT INTO FELHASZNALO VALUES ('s600005@stud.hu', 'jelszo', 'Nagy Brigitta', TO_DATE('1998-12-10', 'yyyy-mm-dd'), 'Budapest', 'Informatikai Kar', 'Programtervező Informatikus', '5', 4.35, 'Állami', 'Aktív', 'Nappali', NULL, NULL, NULL);
+INSERT INTO FELHASZNALO VALUES ('s600006@stud.hu', 'jelszo', 'Szabó Tamás', TO_DATE('1999-07-15', 'yyyy-mm-dd'), 'Szeged', 'Gazdasági Kar', 'Közgazdász', '2', 3.80, 'Állami', 'Aktív', 'Nappali', NULL, NULL, NULL);
+INSERT INTO FELHASZNALO VALUES ('s600007@stud.hu', 'jelszo', 'Horvát Noémi', TO_DATE('2000-04-20', 'yyyy-mm-dd'), 'Pécs', 'Műszaki Kar', 'Gépészmérnöki', '4', 4.15, 'Állami', 'Aktív', 'Nappali', NULL, NULL, NULL);
+INSERT INTO FELHASZNALO VALUES ('s600008@stud.hu', 'jelszo', 'Kovács Lajos', TO_DATE('1997-11-22', 'yyyy-mm-dd'), 'Debrecen', 'Gazdasági Kar', 'Pénzügy', '3', 4.05, 'Állami', 'Aktív', 'Nappali', NULL, NULL, NULL);
+INSERT INTO FELHASZNALO VALUES ('s600009@stud.hu', 'jelszo', 'Szűcs Anita', TO_DATE('2001-10-15', 'yyyy-mm-dd'), 'Szombathely', 'Pedagógiai Kar', 'Tanító', '5', 4.40, 'Állami', 'Aktív', 'Nappali', NULL, NULL, NULL);
+INSERT INTO FELHASZNALO VALUES ('s600010@stud.hu', 'jelszo', 'Takács Gábor', TO_DATE('1998-03-20', 'yyyy-mm-dd'), 'Miskolc', 'Művészeti Kar', 'Színész', '2', 3.65, 'Állami', 'Aktív', 'Nappali', NULL, NULL, NULL);
+INSERT INTO FELHASZNALO VALUES ('s600011@stud.hu', 'jelszo', 'Nagy Ágnes', TO_DATE('1999-08-30', 'yyyy-mm-dd'), 'Eger', 'Gazdasági Kar', 'Pénzügy', '1', 3.55, 'Állami', 'Aktív', 'Nappali', NULL, NULL, NULL);
+INSERT INTO FELHASZNALO VALUES ('s123456@stud.hu', 'jelszo', 'Nagy Tamás', TO_DATE('1999-08-05', 'yyyy-mm-dd'), 'Pécs', 'Gazdasági Kar', 'Pénzügy', '4', 4.10, 'Állami', 'Aktív', 'Nappali', NULL, NULL, NULL);
+INSERT INTO FELHASZNALO VALUES ('s234567@stud.hu', 'jelszo', 'Szentes Zsuzsa', TO_DATE('2000-02-14', 'yyyy-mm-dd'), 'Budapest', 'Művészeti Kar', 'Színész', '3', 3.75, 'Állami', 'Aktív', 'Nappali', NULL, NULL, NULL);
+INSERT INTO FELHASZNALO VALUES ('s345678@stud.hu', 'jelszo', 'Szekeres Ferenc', TO_DATE('1998-11-19', 'yyyy-mm-dd'), 'Szeged', 'Pedagógiai Kar', 'Tanító', '1', 4.45, 'Állami', 'Aktív', 'Nappali', NULL, NULL, NULL);
+INSERT INTO FELHASZNALO VALUES ('s456789@stud.hu', 'jelszo', 'Kiss Júlia', TO_DATE('2002-06-07', 'yyyy-mm-dd'), 'Debrecen', 'Informatikai Kar', 'Programtervező Informatikus', '5', 4.30, 'Állami', 'Aktív', 'Nappali', NULL, NULL, NULL);
+INSERT INTO FELHASZNALO VALUES ('s567890@stud.hu', 'jelszo', 'Tóth Andor', TO_DATE('1997-07-03', 'yyyy-mm-dd'), 'Győr', 'Gazdasági Kar', 'Pénzügy', '2', 3.85, 'Állami', 'Aktív', 'Nappali', NULL, NULL, NULL);
+INSERT INTO FELHASZNALO VALUES ('s678901@stud.hu', 'jelszo', 'Kovács Anna', TO_DATE('2001-04-15', 'yyyy-mm-dd'), 'Székesfehérvár', 'Művészeti Kar', 'Fotográfus', '4', 4.15, 'Állami', 'Aktív', 'Nappali', NULL, NULL, NULL);
+INSERT INTO FELHASZNALO VALUES ('s789012@stud.hu', 'jelszo', 'Szilárd Zsuzsa', TO_DATE('1999-10-20', 'yyyy-mm-dd'), 'Pécs', 'Pedagógiai Kar', 'Tanító', '3', 3.95, 'Állami', 'Aktív', 'Nappali', NULL, NULL, NULL);
+INSERT INTO FELHASZNALO VALUES ('s890123@stud.hu', 'jelszo', 'Kiss Ádám', TO_DATE('1998-03-25', 'yyyy-mm-dd'), 'Budapest', 'Műszaki Kar', 'Építőmérnök', '5', 4.00, 'Állami', 'Aktív', 'Nappali', NULL, NULL, NULL);
+INSERT INTO FELHASZNALO VALUES ('s901234@stud.hu', 'jelszo', 'Takács Gergely', TO_DATE('2000-01-10', 'yyyy-mm-dd'), 'Szeged', 'Gazdasági Kar', 'Közgazdász', '2', 3.80, 'Állami', 'Aktív', 'Nappali', NULL, NULL, NULL);
+INSERT INTO FELHASZNALO VALUES ('s012345@stud.hu', 'jelszo', 'Kovács Tünde', TO_DATE('1997-09-12', 'yyyy-mm-dd'), 'Székesfehérvár', 'Informatikai Kar', 'Programtervező Informatikus', '4', 4.10, 'Állami', 'Aktív', 'Nappali', NULL, NULL, NULL);
+INSERT INTO FELHASZNALO VALUES ('s123457@stud.hu', 'jelszo', 'Nagy Tamás', TO_DATE('1999-08-05', 'yyyy-mm-dd'), 'Pécs', 'Gazdasági Kar', 'Pénzügy', '4', 4.10, 'Állami', 'Aktív', 'Nappali', NULL, NULL, NULL);
+INSERT INTO FELHASZNALO VALUES ('s123458@stud.hu', 'jelszo', 'Szentes Zsuzsa', TO_DATE('2000-02-14', 'yyyy-mm-dd'), 'Budapest', 'Művészeti Kar', 'Színész', '3', 3.75, 'Állami', 'Aktív', 'Nappali', NULL, NULL, NULL);
+INSERT INTO FELHASZNALO VALUES ('s123459@stud.hu', 'jelszo', 'Szekeres Ferenc', TO_DATE('1998-11-19', 'yyyy-mm-dd'), 'Szeged', 'Pedagógiai Kar', 'Tanító', '1', 4.45, 'Állami', 'Aktív', 'Nappali', NULL, NULL, NULL);
+INSERT INTO FELHASZNALO VALUES ('s123460@stud.hu', 'jelszo', 'Kiss Júlia', TO_DATE('2002-06-07', 'yyyy-mm-dd'), 'Debrecen', 'Informatikai Kar', 'Programtervező Informatikus', '5', 4.30, 'Állami', 'Aktív', 'Nappali', NULL, NULL, NULL);
+INSERT INTO FELHASZNALO VALUES ('s123461@stud.hu', 'jelszo', 'Tóth Andor', TO_DATE('1997-07-03', 'yyyy-mm-dd'), 'Győr', 'Gazdasági Kar', 'Pénzügy', '2', 3.85, 'Állami', 'Aktív', 'Nappali', NULL, NULL, NULL);
+INSERT INTO FELHASZNALO VALUES ('s123462@stud.hu', 'jelszo', 'Kovács Anna', TO_DATE('2001-04-15', 'yyyy-mm-dd'), 'Székesfehérvár', 'Művészeti Kar', 'Fotográfus', '4', 4.15, 'Állami', 'Aktív', 'Nappali', NULL, NULL, NULL);
+INSERT INTO FELHASZNALO VALUES ('s123463@stud.hu', 'jelszo', 'Szilárd Zsuzsa', TO_DATE('1999-10-20', 'yyyy-mm-dd'), 'Pécs', 'Pedagógiai Kar', 'Tanító', '3', 3.95, 'Állami', 'Aktív', 'Nappali', NULL, NULL, NULL);
+INSERT INTO FELHASZNALO VALUES ('s123464@stud.hu', 'jelszo', 'Kiss Ádám', TO_DATE('1998-03-25', 'yyyy-mm-dd'), 'Budapest', 'Műszaki Kar', 'Építőmérnök', '5', 4.00, 'Állami', 'Aktív', 'Nappali', NULL, NULL, NULL);
+INSERT INTO FELHASZNALO VALUES ('s123465@stud.hu', 'jelszo', 'Takács Gergely', TO_DATE('2000-01-10', 'yyyy-mm-dd'), 'Szeged', 'Gazdasági Kar', 'Közgazdász', '2', 3.80, 'Állami', 'Aktív', 'Nappali', NULL, NULL, NULL);
+
+-- Oktatók generálása
+INSERT INTO FELHASZNALO VALUES ('t567893@teach.hu', 'jelszo', 'Kovács Péter', TO_DATE('1978-05-23', 'yyyy-mm-dd'), 'Budapest', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Dr', 'Informatikatudományi PhD', 'Informatikai Tanszék');
+INSERT INTO FELHASZNALO VALUES ('t458129@teach.hu', 'jelszo', 'Nagy Éva', TO_DATE('1980-10-12', 'yyyy-mm-dd'), 'Debrecen', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Dr', 'Matematikatudományi PhD', 'Matematikai Tanszék');
+INSERT INTO FELHASZNALO VALUES ('t891234@teach.hu', 'jelszo', 'Tóth Gábor', TO_DATE('1973-03-05', 'yyyy-mm-dd'), 'Szombathely', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Dr', 'Fizikatudományi PhD', 'Fizikai Tanszék');
+INSERT INTO FELHASZNALO VALUES ('t123987@teach.hu', 'jelszo', 'Kiss Andrea', TO_DATE('1972-12-30', 'yyyy-mm-dd'), 'Pécs', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Dr', 'Biológiatudományi PhD', 'Biológiai Tanszék');
+INSERT INTO FELHASZNALO VALUES ('t369852@teach.hu', 'jelszo', 'Horváth László', TO_DATE('1975-07-18', 'yyyy-mm-dd'), 'Miskolc', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Dr', 'Kémia tudományi PhD', 'Kémiai Tanszék');
+INSERT INTO FELHASZNALO VALUES ('t456781@teach.hu', 'jelszo', 'Molnár János', TO_DATE('1979-11-08', 'yyyy-mm-dd'), 'Eger', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Dr', 'Földtudományi PhD', 'Földtani Tanszék');
+INSERT INTO FELHASZNALO VALUES ('t987654@teach.hu', 'jelszo', 'Kovács Mária', TO_DATE('1977-09-27', 'yyyy-mm-dd'), 'Győr', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Dr', 'Politikatudományi PhD', 'Politikatudományi Tanszék');
+INSERT INTO FELHASZNALO VALUES ('t852963@teach.hu', 'jelszo', 'Fekete Balázs', TO_DATE('1974-04-14', 'yyyy-mm-dd'), 'Székesfehérvár', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Dr', 'Pszichológiatudományi PhD', 'Pszichológiai Tanszék');
+INSERT INTO FELHASZNALO VALUES ('t741852@teach.hu', 'jelszo', 'Németh Anikó', TO_DATE('1982-01-20', 'yyyy-mm-dd'), 'Budapest', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Dr', 'Nyelvtudományi PhD', 'Nyelvtudományi Tanszék');
+INSERT INTO FELHASZNALO VALUES ('t112233@teach.hu', 'jelszo', 'Varga István', TO_DATE('1976-08-02', 'yyyy-mm-dd'), 'Szombathely', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Adjunktus', 'Bölcsészettudományi PhD', 'Filozófiai Tanszék');
+INSERT INTO FELHASZNALO VALUES ('t445566@teach.hu', 'jelszo', 'Kiss Andrea', TO_DATE('1979-05-12', 'yyyy-mm-dd'), 'Győr', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Adjunktus', 'Művészettudományi PhD', 'Művészettörténeti Tanszék');
+INSERT INTO FELHASZNALO VALUES ('t778899@teach.hu', 'jelszo', 'Molnár Gábor', TO_DATE('1983-03-25', 'yyyy-mm-dd'), 'Pécs', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Adjunktus', 'Pedagógia tudományi PhD', 'Pedagógiai Tanszék');
+INSERT INTO FELHASZNALO VALUES ('t001122@teach.hu', 'jelszo', 'Tóth Éva', TO_DATE('1977-10-10', 'yyyy-mm-dd'), 'Debrecen', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Adjunktus', 'Sporttudományi PhD', 'Sporttudományi Tanszék');
+INSERT INTO FELHASZNALO VALUES ('t334455@teach.hu', 'jelszo', 'Nagy János', TO_DATE('1980-06-18', 'yyyy-mm-dd'), 'Székesfehérvár', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Adjunktus', 'Informatikai tudományi PhD', 'Informatikai Tanszék');
+INSERT INTO FELHASZNALO VALUES ('t556677@teach.hu', 'jelszo', 'Fekete Zsuzsa', TO_DATE('1982-12-05', 'yyyy-mm-dd'), 'Budapest', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Adjunktus', 'Földrajztudományi PhD', 'Földrajzi Tanszék');
+INSERT INTO FELHASZNALO VALUES ('t789012@teach.hu', 'jelszo', 'Németh Tamás', TO_DATE('1978-09-20', 'yyyy-mm-dd'), 'Miskolc', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Adjunktus', 'Kémia tudományi PhD', 'Kémiai Tanszék');
+INSERT INTO FELHASZNALO VALUES ('t890123@teach.hu', 'jelszo', 'Pintér Katalin', TO_DATE('1981-04-30', 'yyyy-mm-dd'), 'Eger', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Adjunktus', 'Közgazdaságtudományi PhD', 'Közgazdasági Tanszék');
+INSERT INTO FELHASZNALO VALUES ('t345678@teach.hu', 'jelszo', 'Varga Péter', TO_DATE('1979-03-15', 'yyyy-mm-dd'), 'Szeged', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Adjunktus', 'Biológiai tudományi PhD', 'Biológiai Tanszék');
+
+-- KAPCSOLÓ TÁBLÁK FELTÖLTÉSE --------------------------------------------------------------------------------------------------
+
+-- Kurzusterem kapcsolótábla - 5 rekord feltöltése.
+INSERT INTO KURZUSTEREM VALUES ('MBNX311E', 'Kálmán János');
+INSERT INTO KURZUSTEREM VALUES ('MBNX311G', 'Kiss János');
+INSERT INTO KURZUSTEREM VALUES ('IB104E', 'Horváth Benedek');
+INSERT INTO KURZUSTEREM VALUES ('IB104L', 'Tóth Tibor');
+INSERT INTO KURZUSTEREM VALUES ('IB407E', 'Korvin Gyula');
+
+-- Vizsgaterem kapcsolótábla - 5 rekord feltöltése.
+INSERT INTO VIZSGATEREM VALUES (1, 'Bálint Jenő');
+INSERT INTO VIZSGATEREM VALUES (2, 'Molnár Tivadar');
+INSERT INTO VIZSGATEREM VALUES (3, 'Neumann János');
+INSERT INTO VIZSGATEREM VALUES (4, 'Kelcz Miklós');
+INSERT INTO VIZSGATEREM VALUES (5, 'Pintér Mária');
+
+-- Befizetések kapcolótábla - 5 rekord feltöltése
+INSERT INTO BEFIZET VALUES ('s123123@stud.hu', 'Magyar állam', 320000, TO_DATE('2024-06-15', 'yyyy-mm-dd'), NULL);
+INSERT INTO BEFIZET VALUES ('s456456@stud.hu', 'Magyar állam', 280000, TO_DATE('2024-06-15', 'yyyy-mm-dd'), NULL);
+INSERT INTO BEFIZET VALUES ('s789789@stud.hu', 'Magyar állam', 320000, TO_DATE('2024-06-15', 'yyyy-mm-dd'), NULL);
+INSERT INTO BEFIZET VALUES ('s987987@stud.hu', 'Magyar állam', 250000, TO_DATE('2024-06-15', 'yyyy-mm-dd'), NULL);
+INSERT INTO BEFIZET VALUES ('s654654@stud.hu', 'Szlovén állam', 320000, TO_DATE('2024-06-15', 'yyyy-mm-dd'), NULL);
+
+-- Számonkérés kapcsolótábla - 5 rekord feltöltése
+INSERT INTO SZAMONKERES VALUES ('s321321@stud.hu', 1);
+INSERT INTO SZAMONKERES VALUES ('s600091@stud.hu', 2);
+INSERT INTO SZAMONKERES VALUES ('s600092@stud.hu', 3);
+INSERT INTO SZAMONKERES VALUES ('s600093@stud.hu', 4);
+INSERT INTO SZAMONKERES VALUES ('s600094@stud.hu', 5);
+
+-- Oktatás kapcsolótábla - 5 rekord feltöltése
+INSERT INTO OKTATAS VALUES ('s321321@stud.hu', 'MBNX311E'); 
+INSERT INTO OKTATAS VALUES ('s600091@stud.hu', 'MBNX311G');
+INSERT INTO OKTATAS VALUES ('s600092@stud.hu', 'IB104E');
+INSERT INTO OKTATAS VALUES ('s600093@stud.hu', 'IB104L');
+INSERT INTO OKTATAS VALUES ('s600094@stud.hu', 'IB407E');

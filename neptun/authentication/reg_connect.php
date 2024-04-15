@@ -17,7 +17,7 @@ $beosztas = $_POST['beosztas'];
 $kepesites = $_POST['kepesites'];
 $tanszek = $_POST['tanszek'];
 
-if (!preg_match('/@(stud|teach)\.hu$/', $email)) {
+if (!preg_match('/@(stud|teach)\.hu$/', $email) && $email !== 'admin') {
     // Ha nem megfelelő a domain, akkor visszatérünk a regisztráció oldalra és kiírjuk egy hibaüzenetet
     header("Location: ../msg_screens/hibas_email.php");
     exit(); // Fontos, hogy a kód leálljon, és ne folytassa a következő lépéseket
