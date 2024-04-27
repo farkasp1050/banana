@@ -1,0 +1,42 @@
+<?php
+include '../authentication/admin_auth_check.php';
+
+// Oracle adatbázis csatlakozás
+$conn = oci_connect('whitefalcon', 'test123', 'localhost/XE', 'UTF8');
+if (!$conn) {
+    die("Sikertelen csatlakozás!");
+}
+
+if(isset($_POST['update']))
+{
+    $nev = $_POST['nev'];
+    $szamlaszam = $_POST['szamlaszam'];
+
+    // Az Oracle adatbázis UPDATE parancsához szükséges SQL
+    $query = "UPDATE allam SET nev = :nev, szamlaszam = :szamlaszam WHERE nev = :nev";
+
+    $stid = oci_parse($conn, $query);
+    if (!$stid) {
+        $e = oci_error($conn);
+        trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
+    }
+
+    // Paraméterek kötése
+    oci_bind_by_name($stid, ':nev', $nev);
+    oci_bind_by_name($stid, ':szamlaszam', $szamlaszam);
+
+    $r = oci_execute($stid);
+    if ($r) {
+        header("Location: ../msg_screens/sik_a_modositas.php");
+    } else {
+        echo "Sikertelen módosítás!";
+    }
+
+    oci_free_statement($stid);
+    oci_close($conn);
+}
+else
+{
+    header("Location: allamok_modositasa_torlese.php");
+}
+?>

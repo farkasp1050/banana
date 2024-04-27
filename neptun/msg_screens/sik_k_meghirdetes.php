@@ -1,7 +1,6 @@
 
 <?php
-include '../authentication/general_auth_check.php';
-session_start();
+include '../authentication/oktato_auth_check.php';
 if (isset($_POST["fooldalra"])) {
     header("Location: ../oktato/kurzus_modositasa_torlese.php");
     exit();

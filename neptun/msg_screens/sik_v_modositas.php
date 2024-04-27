@@ -1,7 +1,6 @@
 
 <?php
-include '../authentication/general_auth_check.php';
-session_start();
+include '../authentication/oktato_auth_check.php';
 if (isset($_POST["fooldalra"])) {
     header("Location: ../oktato/vizsgak_modositasa_torlese.php");
     exit();
@@ -15,13 +14,13 @@ if (isset($_POST["fooldalra"])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel = "stylesheet" href="../style/logout.css">
     <link rel="icon" href="../img/study-icon.png">
-    <title>Sikeres vizsga törlés!</title>
+    <title>Sikeres törlés!</title>
 </head>
 <body id="hatter_oktato">
 
     <main>
         <div id="kijelentkezes">
-            <h1>Vizsga frissítve!</h1>
+            <h1>Sikeres vizsga módosítás!</h1>
             <form method="POST">
                 <input id="kijelentkezes_gomb" type="submit" value="OK" name="fooldalra"/>
             </form>

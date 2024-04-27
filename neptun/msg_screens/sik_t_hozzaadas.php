@@ -1,7 +1,6 @@
 
 <?php
-include '../authentication/general_auth_check.php';
-session_start();
+include '../authentication/admin_auth_check.php';
 if (isset($_POST["fooldalra"])) {
     header("Location: ../admin/index_admin.php");
     exit();

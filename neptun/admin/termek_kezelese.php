@@ -54,7 +54,7 @@ include '../authentication/admin_auth_check.php';
         </tr>
         <tr>
             <td>Termek módosítása, törlése.</td>
-            <td><a href="#">Megtekintés</a></td>
+            <td><a href="termek_modositasa_torlese.php">Megtekintés</a></td>
         </tr>
 
     </table>

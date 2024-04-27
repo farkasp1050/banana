@@ -140,7 +140,59 @@
     margin-bottom: 100px;
     box-sizing: border-box;
     width: 450px;
-    height: 380px;
+    height: 440px;
+}
+
+#kurzus_box_kicsi {
+    background-color: white;
+    text-align: center;
+    padding: 0%;
+    border: 3px solid darkblue;
+    border-radius: 5px;
+    margin: 40px auto;
+    margin-bottom: 100px;
+    box-sizing: border-box;
+    width: 450px;
+    height: 580px;
+}
+
+#terem_box_kicsi {
+    background-color: white;
+    text-align: center;
+    padding: 0%;
+    border: 3px solid darkblue;
+    border-radius: 5px;
+    margin: 40px auto;
+    margin-bottom: 100px;
+    box-sizing: border-box;
+    width: 450px;
+    height: 520px;
+}
+
+#allam_box_kicsi {
+    background-color: white;
+    text-align: center;
+    padding: 0%;
+    border: 3px solid darkblue;
+    border-radius: 5px;
+    margin: 40px auto;
+    margin-bottom: 100px;
+    box-sizing: border-box;
+    width: 450px;
+    height: 300px;
+}
+
+#felhasznalo_box_kicsi {
+    background-color: white;
+    text-align: center;
+    padding: 0%;
+    border: 3px solid darkblue;
+    border-radius: 5px;
+    margin: 40px auto;
+    margin-bottom: 100px;
+    box-sizing: border-box;
+    width: 450px;
+    height: 1160px;
 }
 
 .cim {

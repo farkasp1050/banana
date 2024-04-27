@@ -1,6 +1,6 @@
 
 <?php
-include '../authentication/general_auth_check.php';
+include '../authentication/admin_auth_check.php';
 session_start();
 if (isset($_POST["fooldalra"])) {
     header("Location: ../admin/index_admin.php");
@@ -15,7 +15,7 @@ if (isset($_POST["fooldalra"])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel = "stylesheet" href="../style/logout.css">
     <link rel="icon" href="../img/study-icon.png">
-    <title>Sikeres állam hozzáadás</title>
+    <title>Sikeres állam hozzáadás!</title>
 </head>
 <body id="hatter_oktato">
 

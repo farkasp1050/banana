@@ -57,12 +57,8 @@ include '../authentication/admin_auth_check.php';
             <td><a href="hallgato_hozzaadasa.php">Megtekintés</a></td>
         </tr>
         <tr>
-            <td>Tantermek, előadótermek. - MÉG NEM MÓDOSÍTOTT</td>
-            <td><a href="../listazasok-lekerdezesek/termek.php">Megtekintés</a></td>
-        </tr>
-        <tr>
-            <td>Összes oktató megtekintése - MÉG NEM MÓDOSÍTOTT</td>
-            <td><a href="../listazasok-lekerdezesek/oktatok.php">Megtekintés</a></td>
+            <td>Felhasználók módosítása, törlése.</td>
+            <td><a href="felhasznalok_modositasa_torlese.php">Megtekintés</a></td>
         </tr>
     </table>
 </main>
